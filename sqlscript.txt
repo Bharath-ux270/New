@@ -1,0 +1,58 @@
+
+CREATE SCHEMA Student;
+CREATE SCHEMA Billing;
+CREATE SCHEMA UD;
+
+
+CREATE TABLE Student.Students (
+    Id INT PRIMARY KEY IDENTITY(1, 1),
+    FirstName NVARCHAR(50) NOT NULL,
+    LastName NVARCHAR(50) NOT NULL,
+	CreatedBy NVARCHAR(50) NOT NULL,
+	CreatedDate Datetime NOT NULL,
+	ModifyBy NVARCHAR(50) NOT NULL,
+	ModifiedDate Datetime NOT NULL
+);
+
+
+CREATE TABLE Billing.BillingInfos (
+    Id INT PRIMARY KEY IDENTITY(1, 1),
+    StudentId INT NOT NULL,
+    Amount DECIMAL(10, 2) NOT NULL,
+    DueDate DATE NOT NULL,
+	CreatedBy NVARCHAR(50) NOT NULL,
+	CreatedDate Datetime NOT NULL,
+	ModifyBy NVARCHAR(50) NOT NULL,
+	ModifiedDate Datetime NOT NULL
+    FOREIGN KEY (StudentId) REFERENCES Student.Students(Id)
+);
+
+
+
+CREATE TABLE Billing.PaymentHistory (
+    Id INT PRIMARY KEY IDENTITY(1, 1),
+    BillId INT NOT NULL,
+    AmountPaid DECIMAL(10, 2) NOT NULL,
+    PaymentDate DATETIME NOT NULL,
+	CreatedBy NVARCHAR(50) NOT NULL,
+	CreatedDate Datetime NOT NULL,
+	ModifyBy NVARCHAR(50) NOT NULL,
+	ModifiedDate Datetime NOT NULL
+    FOREIGN KEY (BillId) REFERENCES Billing.BillingInfos(Id)
+);
+
+CREATE TABLE UD.[User] (
+    Id INT PRIMARY KEY IDENTITY(1, 1),
+    FullName NVARCHAR(50)  NULL,
+    EmailId NVARCHAR(50) NOT NULL,
+	Password NVARCHAR(50) NOT NULL,
+	Role NVARCHAR(50) NOT NULL,
+	CreatedBy NVARCHAR(50) NOT NULL,
+	CreatedDate Datetime NOT NULL,
+	ModifyBy NVARCHAR(50) NOT NULL,
+	ModifiedDate Datetime NOT NULL
+);
+
+
+insert into UD.[User] values('Vishnu','Vishnu@gmail.com','4rew433','admin','admin',GETDATE(),'admin',GETDATE())
+insert into UD.[User] values('Bharath','Bharath@gmail.com','65fdffd4','User','admin',GETDATE(),'admin',GETDATE())
